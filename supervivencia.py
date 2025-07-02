@@ -252,53 +252,7 @@ def interpretar_estadisticas(candies_por_persona):
     resultados.append(f"  {emoji} Probabilidad de éxito: {probabilidad_text}")
     resultados.append(f"  📈 Nivel de confianza estimado: {confianza}")
     resultados.append(f"  📊 Ratio disponibilidad: {ratio_disponibilidad:.2f}")
-     # Entropía con interpretación mejorada
-    entropias = []
-    for i, dulces in enumerate(candies_por_persona):
-        contador = Counter(dulces)
-        probs = [contador[tipo]/2 for tipo in CARAMEL_TYPES]  # 2 caramelos por persona
-        entropia = -sum(p * np.log2(p) if p > 0 else 0 for p in probs)
-        entropias.append(entropia)
-    
-    entropia_promedio = np.mean(entropias)
-    entropia_maxima = np.log2(len(CARAMEL_TYPES))
-    diversidad = entropia_promedio / entropia_maxima
-    
-    resultados.append(f"\n🌈 ANÁLISIS DE DIVERSIDAD (Entropía de Shannon):")
-    resultados.append(f"  📊 Entropía promedio: {entropia_promedio:.3f} bits")
-    resultados.append(f"  📊 Entropía máxima: {entropia_maxima:.3f} bits")
-    resultados.append(f"  📊 Índice de diversidad: {diversidad:.1%}")
-    
-    if diversidad > 0.9:
-        nivel_diversidad = "EXCELENTE"
-        emoji_div = "🟢"
-        interpretacion_div = "Distribución casi perfectamente diversa"
-        impacto_div = "Experiencia muy variada para los jugadores"
-    elif diversidad > 0.8:
-        nivel_diversidad = "ALTA"
-        emoji_div = "🟢"
-        interpretacion_div = "Buena diversidad en las combinaciones"
-        impacto_div = "Los jugadores recibieron mezclas variadas"
-    elif diversidad > 0.6:
-        nivel_diversidad = "MEDIA"
-        emoji_div = "🟡"
-        interpretacion_div = "Diversidad moderada"
-        impacto_div = "Cierta variación en las combinaciones"
-    elif diversidad > 0.4:
-        nivel_diversidad = "BAJA"
-        emoji_div = "🟠"
-        interpretacion_div = "Poca diversidad en las combinaciones"
-        impacto_div = "Combinaciones algo repetitivas"
-    else:
-        nivel_diversidad = "MUY BAJA"
-        emoji_div = "🔴"
-        interpretacion_div = "Muy poca diversidad"
-        impacto_div = "Muchos jugadores recibieron combinaciones similares"
-    
-    resultados.append(f"  {emoji_div} Nivel de diversidad: {nivel_diversidad}")
-    resultados.append(f"  🔍 Interpretación: {interpretacion_div}")
-    resultados.append(f"  🎮 Impacto: {impacto_div}")
-
+     
     return resultados
 
 # ---------- LÓGICA PRINCIPAL DEL JUEGO ----------
@@ -629,9 +583,5 @@ status_frame.pack(fill=tk.X, pady=(10, 0))
 
 status_label = ttk.Label(status_frame, text="Listo para simular", font=('Helvetica', 10))
 status_label.pack(side=tk.LEFT)
-
-version_label = ttk.Label(status_frame, text="Versión 3.1 - Interpretación Estadística Mejorada", 
-                         font=('Helvetica', 10))
-version_label.pack(side=tk.RIGHT)
 
 root.mainloop()
